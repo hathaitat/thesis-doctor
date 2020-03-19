@@ -124,6 +124,8 @@ class SignUpViewController:UIViewController, UITextFieldDelegate {
         //*****date*******//
         birthdayField.inputView = datePicker
         datePicker.datePickerMode = .date
+        datePicker.calendar = Calendar(identifier: .buddhist)
+        datePicker.locale = Locale(identifier: "th")
                
                
         let toolbar = UIToolbar()
@@ -184,6 +186,7 @@ class SignUpViewController:UIViewController, UITextFieldDelegate {
             let formatter = DateFormatter()
             formatter.dateFormat = "dd.MM.yyyy"
             birthdayField.text = formatter.string(from: datePicker.date)
+            
                
         }
     
