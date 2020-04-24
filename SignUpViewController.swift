@@ -79,7 +79,7 @@ class SignUpViewController:UIViewController, UITextFieldDelegate {
         continueButton.titleLabel?.font = UIFont.systemFont(ofSize: 18.0, weight: UIFont.Weight.bold)
         continueButton.center = CGPoint(x: view.center.x, y: view.frame.height - continueButton.frame.height - 24)
         continueButton.highlightedColor = UIColor(white: 1.0, alpha: 1.0)
-        continueButton.defaultColor = UIColor(red: 245/255, green: 239/255, blue: 221/255, alpha: 1)
+        continueButton.defaultColor = UIColor(red: 242/255, green: 242/255, blue: 247/255, alpha: 1)
         continueButton.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         
         view.addSubview(continueButton)
@@ -146,22 +146,29 @@ class SignUpViewController:UIViewController, UITextFieldDelegate {
     //limit text//
     //limit text//
     @objc func checkText (textfield: UITextField){
-        if (passwordField.text?.count ?? 0 < 8) {
+        if (passwordField.text?.count ?? 0 < 9) {
             checkText1.text = "รหัสผ่านน้อยกว่า 8 ตัวอักษร"
-            checkText1.textColor = UIColor.red
+            checkText1.textColor = UIColor.darkGray
             }
         else{
-            
+            let alert = UIAlertController(title: "กรอกรหัสผ่านเกินจำนวนที่กำหนด", message: "กรุณากรอกรหัสผ่านใหม่อีกรอบ", preferredStyle: .alert)
+            let action = UIAlertAction(title: "ตกลง", style: .default, handler: nil)
+            alert.addAction(action)
+                        self.present(alert, animated: true, completion: nil)
             }
 
         }
         
         @objc func checkText2 (textfield: UITextField){
-            if (idCardField.text?.count ?? 0 > 13){
+            if (idCardField.text?.count ?? 0 < 14){
                 checkText2.text = "เลขบัตรประชาชนไม่ถูกต้อง"
-                checkText2.textColor = UIColor.red
+                checkText2.textColor = UIColor.darkGray
             }else{
-                }
+                let alert = UIAlertController(title: "กรอกเลขบัตรประชาชนเกินที่กำหนด", message: "กรุณากรอกเลขบัตรประชาชนใหม่อีกรอบ", preferredStyle: .alert)
+                let action = UIAlertAction(title: "ตกลง", style: .default, handler: nil)
+                alert.addAction(action)
+                            self.present(alert, animated: true, completion: nil)
+            }
             }
     
     

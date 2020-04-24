@@ -35,9 +35,12 @@ class loginP :UIViewController, UITextFieldDelegate {
     @IBOutlet weak var btnLog: UIButton!
     @IBOutlet weak var btnSign: UIButton!
     
+    //ตัวโหลด
+    var activityView:UIActivityIndicatorView!
+    
     func shadow(){
         btnSign.layer.cornerRadius = 5
-             btnLog.layer.cornerRadius = 5
+        btnLog.layer.cornerRadius = 5
         emailLog.setCorner(radius: 5)
         passLog.setCorner(radius: 5)
         
@@ -50,6 +53,7 @@ class loginP :UIViewController, UITextFieldDelegate {
         btnLog.layer.shadowOpacity = 1
         btnLog.layer.shadowOffset = .zero
         btnLog.layer.shadowRadius = 2
+       
     }
     
     
@@ -62,6 +66,8 @@ class loginP :UIViewController, UITextFieldDelegate {
         shadow()
 
         
+        
+        
 
     }
 
@@ -69,9 +75,18 @@ class loginP :UIViewController, UITextFieldDelegate {
         guard let email = emailLog.text else { return }
         guard let pass = passLog.text else { return }
 
-
+//        self.activityView.startAnimating()
+        
         Auth.auth().signIn(withEmail: email, password: pass) { email, error in
             if error == nil && email != nil {
+                //ตัวโหลด
+                self.activityView = UIActivityIndicatorView(style: .large)
+                self.activityView.color = secondaryColor
+                self.activityView.frame = CGRect(x: 0, y: 0, width: 500.0, height: 500.0)
+                self.activityView.center = CGPoint(x: self.view.center.x, y: self.view.center.y)
+                self.view.addSubview(self.activityView)
+                self.activityView.startAnimating()
+                
                 self.dismiss(animated: false, completion: nil)
                 print("Ok")
             }else{
@@ -90,6 +105,7 @@ class loginP :UIViewController, UITextFieldDelegate {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
+        
         if let email1 = Auth.auth().currentUser {
             self.performSegue(withIdentifier: "toHome", sender: self)
         }

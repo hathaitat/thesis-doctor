@@ -22,6 +22,7 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Kanit-Medium.otf</string>
 		<string>db adman x.ttf</string>
 		<string>Kanit-Light.ttf</string>
 	</array>

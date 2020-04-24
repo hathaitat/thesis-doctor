@@ -16,20 +16,25 @@ class book1TabelViewController: UIViewController {
     
     @IBOutlet weak var showTable: UITableView!
     
-    
-    var showdata2 = [String]()
-    var showdata3 = [String]()
-//    var showdata2 = ["bell","beam"]
-    var showTimeperiod = ""
-    var showDayPick = ""
-    var showDayPickTotal = ""
-//    var showPicDoc = ""
-    var showPicDoc = ""
+ var showdata2 = [String]()
+     var showdata3 = [String]()
+ //    var showdata2 = ["bell","beam"]
+     var showTimeperiod = ""
+     var showDayPick = ""
+     var showDayPickTotal = ""
+ //    var showPicDoc = ""
+     var showPicDoc = ""
+     var showdataSymptom3 = ""
+     var num = "2"
+     var namedocc = ""
+ 
+     //รูป
+     var ggg = [String]()
+ 
+      var selectedDateLong = ""
     
     let db = Firestore.firestore()
     var selectedDate = Date()
-    
-//    @IBOutlet weak var view111: UIView!
     
     func image(){
         let data = self.db.collection("doctor").whereField("nameDoc", isEqualTo: self.showdata2)
@@ -81,11 +86,13 @@ extension book1TabelViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let doc = showdata2[indexPath.row]
         let dept = showdata3[indexPath.row]
-        let cell = showTable.dequeueReusableCell(withIdentifier: "cell") as! book1
-       
+        let storageRef = Storage.storage().reference(forURL: ggg[indexPath.row])
+        
+        let cell = showTable.dequeueReusableCell(withIdentifier: "cell1") as! book1
+        cell.doctorImage1.sd_setImage(with: storageRef)
         cell.doctorName1.text = doc
         cell.doctorDept1.text = dept
-
+        
         return cell
         
     }
@@ -95,6 +102,11 @@ extension book1TabelViewController: UITableViewDelegate, UITableViewDataSource{
         vc?.showTimeperiod2 = showTimeperiod
         vc?.showDayPick2 = showDayPick
         vc?.showDayPickTotal2 = showDayPickTotal
+        vc?.showdataSymptom4 = showdataSymptom3
+        vc?.num2 = num
+        
+    
+        
         self.present(vc!, animated: true)
         
     }

@@ -85,6 +85,8 @@ class CalendarViewController: UIViewController, UICollectionViewDataSource, UICo
     
     @IBOutlet weak var wrapper: UIView!
     
+    
+    
     var delegate: CalendarCallBack? = nil
     
     @IBAction func close(_ sender: UIButton){
@@ -108,6 +110,7 @@ class CalendarViewController: UIViewController, UICollectionViewDataSource, UICo
             self.dismiss(animated: false, completion: nil)
             self.delegate?.didSelectDate(date: self.selectedDate)
             print(self.selectedDate)
+            
         }
     
     }
@@ -121,7 +124,6 @@ class CalendarViewController: UIViewController, UICollectionViewDataSource, UICo
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        print(c)
         let numberOfCellsPerRow: CGFloat = 7
         
         
@@ -265,15 +267,10 @@ class CalendarViewController: UIViewController, UICollectionViewDataSource, UICo
                 date.text = selectedDate.getTitleDateFC()
                 selectedDate = Date()
                 selectedIndex = indexPath
-                print(date)
+//                print(date)
                 
             }
-        }
-//        วันที่เปลี่ยนสีอยู่ตรงนี้นะ อยู่ลืม*************************
-        if calendarDay.text == "22"{
-            calendarDay.textColor = UIColor.green
-        }
-        
+        }        
         return cell
     }
     

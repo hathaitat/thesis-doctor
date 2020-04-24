@@ -9,10 +9,12 @@
 import UIKit
 import Firebase
 import ApiAI
+import UserNotifications
+
 
 //ปุ่มเปลี่ยนสีของ signup and login
-let primaryColor = UIColor(red: 161/255, green: 99/255, blue: 247/255, alpha: 1)
-let secondaryColor = UIColor(red: 52/255, green: 148/255, blue: 230/255, alpha: 1)
+let primaryColor = UIColor(red: 132/255, green: 104/255, blue: 173/255, alpha: 1)
+let secondaryColor = UIColor(red: 81/255, green: 81/255, blue: 81/255, alpha: 1)
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate{
@@ -23,20 +25,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate{
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        
+        
+        
         FirebaseApp.configure()
         let db = Firestore.firestore()
         
-//        let configuration = AIDefaultConfiguration()
-//        configuration.clientAccessToken = "c803492f3d8c47f893c3afa4869442ec"
-//
-//        let apiai = ApiAI.shared()
-//        apiai?.configuration = configuration
+//        //notification
+        let center = UNUserNotificationCenter.current()
+        let options: UNAuthorizationOptions = [.sound, .alert, .badge]
+        center.requestAuthorization(options: options) { (granted, error) in
+            if error != nil {
+                print(error)
+            }
+////             center.delegate = self
+            
+        }
+        
+       
         
         return true
         
     }
 
     // MARK: UISceneSession Lifecycle
+    
+//    func userNotificationCenterr(_ center: UNUserNotificationCenter, willPresent notification: UNNotification, withCompletionHandler completionHandler: @escaping(UNNotificationPresentationOptions) -> Void){
+//        completionHandler([.alert, .badge, .sound])
+//    }
 
     func application(_ application: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options: UIScene.ConnectionOptions) -> UISceneConfiguration {
         // Called when a new scene session is being created.

@@ -11,8 +11,6 @@ import Firebase
 
 class ViewController: UIViewController, CalendarCallBack {
    
-    
-    
     @IBOutlet weak var dateLabel: UILabel!
     
     let db = Firestore.firestore()
@@ -20,8 +18,6 @@ class ViewController: UIViewController, CalendarCallBack {
     
     var continueButton:RoundedWhiteButton!
     var activityView:UIActivityIndicatorView!
-    
-    
     
     @IBAction func showCalendar(_ sender: UIButton){
         let CalendarViewController = self.storyboard?.instantiateViewController(withIdentifier: "CalendarViewController") as! CalendarViewController
@@ -32,118 +28,114 @@ class ViewController: UIViewController, CalendarCallBack {
         
     }
     
-//    func didSelectDate(date: Date) {
-//        selectedDate = date
-//        dateLabel.isHidden = false
-//
-//        dateLabel.text = date.getTitleDateFC()
-////        print(dateLabel.text)
-//        let aa : String = dateLabel.text!
-//        let aaa : [String] = aa.components(separatedBy: ", ")
-//        var aaaa : String = aaa[0]
-//        print(aaaa)
-//        let data = self.db.collection("doctor")
-//        data.getDocuments {(snapshot, error) in
-//            if error == nil && snapshot != nil {
-//                for document in snapshot!.documents {
-//                    let schedule = document.get("scheduleDoc") as! [String:String]
-//                    for days in schedule {
-//                        if days.value == self.timee && days.key == self.dateLabel.text{
-//                            print(schedule)
-//                            let dd = document.get("nameDoc") as! String
-//                            print(dd)
-//                            let vcc = self.storyboard?.instantiateViewController(withIdentifier: "bookdoctor11") as! bookdoctor11ViewController
-//                            vcc.showdata1 = dd
-//                            self.present(vcc, animated: true, completion: nil)
-//                        }
-//                    }
-//                }
-//            }
-//
-//    }
-    
-    
+
     @IBOutlet weak var dateBtn: UIButton!
     @IBOutlet weak var homeBtn: UIButton!
     
     @IBOutlet weak var addTime1: UIButton!
-    
     @IBOutlet weak var addTime2: UIButton!
-    
     @IBOutlet weak var addTime3: UIButton!
     @IBOutlet weak var addTime4: UIButton!
-     @IBOutlet weak var addTime5: UIButton!
+    @IBOutlet weak var addTime5: UIButton!
+    @IBOutlet weak var topvView: UIView!
     
-    var timee:String = ""
+    var timee:String = "" //ตัวแปรเก็บเวลา
+    
+    var today = ""
+    
     
     @IBAction func time1(_ sender: Any) {
-        addTime1.backgroundColor = UIColor(red: 109/255, green: 206/255, blue: 235/255, alpha: 1)
         timee = "08.30 - 09.30"
-        print(timee)
+        addTime1.backgroundColor = UIColor(red: 224/255, green: 174/255, blue: 112/255, alpha: 1)
+        if addTime1.backgroundColor == UIColor(red: 224/255, green: 174/255, blue: 112/255, alpha: 1){
+            //เปลี่ยนสีปุ่มเมื่อเลือกอันอื่น
+            addTime2.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime3.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime4.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime5.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+        }
     }
     
     @IBAction func time2(_ sender: Any) {
-        addTime2.backgroundColor = UIColor(red: 109/255, green: 206/255, blue: 235/255, alpha: 1)
         timee = "09.31 - 10.30"
-        print(timee)
+        addTime2.backgroundColor = UIColor(red: 224/255, green: 174/255, blue: 112/255, alpha: 1)
+        if addTime2.backgroundColor == UIColor(red: 224/255, green: 174/255, blue: 112/255, alpha: 1){
+            //เปลี่ยนสีปุ่มเมื่อเลือกอันอื่น
+            addTime1.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime3.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime4.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime5.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+        }
     }
     
     @IBAction func time3(_ sender: Any) {
-        addTime3.backgroundColor = UIColor(red: 109/255, green: 206/255, blue: 235/255, alpha: 1)
         timee = "10.31 - 11.30"
-        print(timee)
+        addTime3.backgroundColor = UIColor(red: 224/255, green: 174/255, blue: 112/255, alpha: 1)
+        if addTime3.backgroundColor == UIColor(red: 224/255, green: 174/255, blue: 112/255, alpha: 1){
+            //เปลี่ยนสีปุ่มเมื่อเลือกอันอื่น
+            addTime1.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime2.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime4.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime5.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+      }
     }
     
     @IBAction func time4(_ sender: Any) {
-        addTime4.backgroundColor = UIColor(red: 109/255, green: 206/255, blue: 235/255, alpha: 1)
         timee = "13.00 - 14.00"
-        print(timee)
+        addTime4.backgroundColor = UIColor(red: 224/255, green: 174/255, blue: 112/255, alpha: 1)
+        if addTime4.backgroundColor == UIColor(red: 224/255, green: 174/255, blue: 112/255, alpha: 1){
+            //เปลี่ยนสีปุ่มเมื่อเลือกอันอื่น
+            addTime1.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime3.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime2.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime5.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+       }
     }
     
     @IBAction func time5(_ sender: Any) {
-        addTime5.backgroundColor = UIColor(red: 109/255, green: 206/255, blue: 235/255, alpha: 1)
         timee = "14.01 - 15.00"
-        print(timee)
+        addTime5.backgroundColor = UIColor(red: 224/255, green: 174/255, blue: 112/255, alpha: 1)
+        if addTime5.backgroundColor == UIColor(red: 224/255, green: 174/255, blue: 112/255, alpha: 1){
+            //เปลี่ยนสีปุ่มเมื่อเลือกอันอื่น
+            addTime1.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime3.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime4.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+            addTime2.backgroundColor = UIColor(red: 235/255, green: 235/255, blue: 235/255, alpha: 1)
+       }
     }
     
     
-    var showdatata = [String]()
-    var showdatata2 = [String]()
+    var showdatata = [String]() //nameDoc
+    var showdatata2 = [String]() //deptDoc
     var Timeperiod = ""
     var dayPick = ""
     var dayPickTotal = ""
     var imageDoc = ""
     
-    func didSelectDate(date: Date) {
-            selectedDate = date
-            dateLabel.isHidden = false
-            
-            dateLabel.text = date.getTitleDateFC()
-    //        print(dateLabel.text)
-            let aa : String = dateLabel.text!
-            let aaa : [String] = aa.components(separatedBy: ", ")
-            var aaaa : String = aaa[0]
-            print(aaaa)
-        self.Timeperiod.append(self.timee)
-        self.dayPick.append(aaaa)
-        self.dayPickTotal = aa
+    var gg = [String]() //เก็บurlรูป
+    
+    //ส่งค่าอาการจากหน้าประเมิน
+    var showdataSymptom2 = ""
+    var num3 = ""
 
-//            let data = self.db.collection("doctor")
-//            data.getDocuments {(snapshot, error) in
-//                if error == nil && snapshot != nil {
-//                    for document in snapshot!.documents {
-//                        let schedule = document.get("scheduleDoc") as! [String:[String]]
-//                        for days in schedule {
-//                            if days.key == aaaa && days.value == [self.timee]{
-//                                print(self.timee)
-//                                print("ok")
-//                                let dd = document.get("nameDoc") as! String
-//                                print("ok1")
-//                                    //print(dd)
-//                                let cc = document.get("deptDoc") as! String
-//                                print("ok2")
-//                                self.showdatata.append(dd)
-//                                self.showdatata2.append(cc)
+    
+    func didSelectDate(date: Date) {
+        print(selectedDate)
+        dateLabel.isHidden = false
+        dateLabel.text = date.getTitleDateFC()
+        
+        //แปลงวันที่
+        let aa : String = dateLabel.text!
+        let aaa : [String] = aa.components(separatedBy: ", ")
+        var aaaa : String = aaa[0]
+            print(aaaa)
+//        self.Timeperiod.append(self.timee)
+//        self.dayPick.append(aaaa)
+        self.Timeperiod = self.timee
+        self.dayPick = aaaa
+        self.dayPickTotal = aa
+        
+
         
         let data = self.db.collection("doctor")
         data.getDocuments {(snapshot, error) in
@@ -157,54 +149,35 @@ class ViewController: UIViewController, CalendarCallBack {
                             for timeperiod in days.value{
                                 if timeperiod == self.timee{
                                     let dd = document.get("nameDoc") as! String
-                            print("ok1")
-                                //print(dd)
-                            let cc = document.get("deptDoc") as! String
-                            print("ok2")
-                            self.showdatata.append(dd)
-                            self.showdatata2.append(cc)
-                           
-                            print(self.showdatata)
-                                
-                            let data = self.db.collection("doctor").whereField("nameDoc", isEqualTo: self.showdatata)
-                            data.getDocuments { (snapshot, error) in
-                                if error == nil && snapshot != nil {
-                                    for document in snapshot!.documents {
+                                    print("ok1")
+                                    let cc = document.get("deptDoc") as! String
                                     let imageURL = document.get("imageDoc") as! String
-                                    if imageURL != "" {
-                                        self.imageDoc.append(imageURL)
-                                        let storageRef = Storage.storage().reference(forURL: imageURL)
-                                //                               self.doctorImage1.sd_setImage(with: storageRef)
-                                                        }
-                                //                        self.tableView.reloadData()
-                                                    }
-                                                   
-                                                }
-                                        }
-                                
-                                            
-                                self.setContinueButton(enabled: true)
-                                            
+
+                                    
+//                                    self.showdatata.append(dd)
+                                    self.showdatata = [dd]
+//                                    self.showdatata2.append(cc)
+                                    self.showdatata2 = [cc]
+//                                    self.gg.append(imageURL)
+                                    self.gg = [imageURL]
+                           
+                                    print(self.showdatata)
+                                    self.checkDoc()
+                                    
+                                    self.setContinueButton(enabled: true)
+                                  
                             }
 
                         }
                     }
                 }
-                }}
+                }
+            }
         }
-        }
-    
-    @IBAction func nextBnt(_ sender: Any) {
-//        print(showdatata)
-//        let vc1 = self.storyboard?.instantiateViewController(withIdentifier: "book") as! book1TabelViewController
-//        vc1.showdata2 = self.showdatata
-//        vc1.showdata3 = self.showdatata2
-//        vc1.showTimeperiod = self.Timeperiod
-//        vc1.showDayPick = self.dayPick
-//        vc1.showDayPickTotal = self.dayPickTotal
-//        self.present(vc1, animated: true, completion: nil)
 
         }
+    
+
     
     func shadow(){
         addTime1.layer.shadowColor = UIColor.gray.cgColor
@@ -236,16 +209,70 @@ class ViewController: UIViewController, CalendarCallBack {
         homeBtn.layer.shadowOpacity = 1
         homeBtn.layer.shadowOffset = .zero
         homeBtn.layer.shadowRadius = 3
+        homeBtn.center = CGPoint(x: 365, y: 750)
+
         
         dateBtn.layer.shadowColor = UIColor.gray.cgColor
         dateBtn.layer.shadowOpacity = 1
         dateBtn.layer.shadowOffset = .zero
         dateBtn.layer.shadowRadius = 3
+        
+        topvView.layer.borderWidth = 1.5
+        topvView.layer.borderColor = UIColor(red: 132/255, green: 104/255, blue: 173/255, alpha: 1).cgColor
+    }
+    
+    func checkDoc(){
+        var appendname = [String]()
+        let data = self.db.collection("appointment")
+        data.getDocuments {(snapshot, error) in
+            if error == nil && snapshot != nil {
+                for document in snapshot!.documents {
+                    let dayAppoint = document.get("dayAppoint") as! String
+                    if self.today == dayAppoint{
+                        let nameDoc = document.get("nameDoc") as! String
+//                        var counts: [String: Int] = [:]
+                        appendname.append(nameDoc)
+                        var count = appendname.count
+                        print(appendname.count)
+                        print(dayAppoint)
+                        
+                        if count > 10 {
+                            print("ok")
+                            let alert = UIAlertController(title: "คิวของแพทย์เต็ม", message: "โปรดเลือกวันเวลานัดหมายใหม่", preferredStyle: .alert)
+                            let action = UIAlertAction(title: "ตกลง", style: .default, handler: nil)
+                                alert.addAction(action)
+                            self.present(alert, animated: true, completion: nil)
+                        }
+                        else{
+                        }
+                    }
+                }
+            }
+        }
     }
     
     
+    @IBAction func actionBack(_ sender: Any) {
+        let vc = self.storyboard?.instantiateViewController(withIdentifier: "backback") as! memuViewController
+        self.present(vc, animated: true, completion: nil)
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+
+        
+        if let navigationController = self.navigationController {
+
+           let navigationBar = navigationController.navigationBar
+            let navBorder: UIView = UIView(frame: CGRect(x: 0, y: navigationBar.frame.size.height - 1.5, width: navigationBar.frame.size.width, height: 1.5))
+           navBorder.backgroundColor = UIColor(red: 132/255, green: 104/255, blue: 173/255, alpha: 1)
+        navBorder.isOpaque = true
+           self.navigationController?.navigationBar.addSubview(navBorder)
+        }
+        
+        dateLabel.isHidden = false
+        today = selectedDate.getTitleDateFC()
+//        checkDoc()
         shadow()
         dateBtn.layer.cornerRadius = 5
         addTime1.layer.cornerRadius = 5
@@ -254,16 +281,17 @@ class ViewController: UIViewController, CalendarCallBack {
         addTime4.layer.cornerRadius = 5
         addTime5.layer.cornerRadius = 5
         
+        
         //button continue//
         view.addVerticalGradientLayer(topColor: primaryColor, bottomColor: secondaryColor)
         
         continueButton = RoundedWhiteButton(frame: CGRect(x: 0, y: 0, width: 200, height: 50))
-        continueButton.setTitleColor(secondaryColor, for: .normal)
+        continueButton.setTitleColor(UIColor.white, for: .normal)
         continueButton.setTitle("ต่อไป", for: .normal)
         continueButton.titleLabel?.font = UIFont.systemFont(ofSize: 18.0, weight: UIFont.Weight.bold)
         continueButton.center = CGPoint(x: view.center.x, y: view.frame.height - continueButton.frame.height - 24)
         continueButton.highlightedColor = UIColor(white: 1.0, alpha: 1.0)
-        continueButton.defaultColor = UIColor(red: 245/255, green: 239/255, blue: 221/255, alpha: 1)
+        continueButton.defaultColor = UIColor(red: 132/255, green: 104/255, blue: 173/255, alpha: 1)
         continueButton.addTarget(self, action: #selector(ee), for: .touchUpInside)
         
         view.addSubview(continueButton)
@@ -276,7 +304,6 @@ class ViewController: UIViewController, CalendarCallBack {
     }
     
     @objc func ee(){
-        print(showdatata)
         let vc1 = self.storyboard?.instantiateViewController(withIdentifier: "book") as! book1TabelViewController
         vc1.showdata2 = self.showdatata
         vc1.showdata3 = self.showdatata2
@@ -284,6 +311,10 @@ class ViewController: UIViewController, CalendarCallBack {
         vc1.showDayPick = self.dayPick
         vc1.showDayPickTotal = self.dayPickTotal
         vc1.showPicDoc = self.imageDoc
+        vc1.showdataSymptom3 = showdataSymptom2
+        vc1.ggg = gg //รูป
+//        vc1.selectedDateLong = selectedDate2
+        
         self.present(vc1, animated: true, completion: nil)
     }
     //button continue//
@@ -292,6 +323,7 @@ class ViewController: UIViewController, CalendarCallBack {
             return .lightContent
         }
     }
+   
     
     @IBAction func handleDismissButton(_ sender: Any) {
         self.dismiss(animated: false, completion: nil)
@@ -305,9 +337,7 @@ class ViewController: UIViewController, CalendarCallBack {
             continueButton.isEnabled = false
         }
     }
+    
 }
-//
-//    override func didReceiveMemoryWarning() {
-//        super.didReceiveMemoryWarning()
-//    }
+
 

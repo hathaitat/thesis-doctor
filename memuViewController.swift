@@ -8,6 +8,8 @@
 
 import UIKit
 import Firebase
+import UserNotifications
+
 
 extension Date {
     
@@ -93,11 +95,25 @@ class memuViewController: UIViewController {
     @IBOutlet weak var btn4: UIButton!
     @IBOutlet weak var btn5: UIButton!
     
+    @IBOutlet weak var backview: UIImageView!
     let db = Firestore.firestore()
     var selectedDate = Date()
     var ref: DocumentReference? = nil
     
+    //บอกวันที่ปัจจุบัน
     var today = ""
+    
+    //เก็บเพื่อนทำการ notification
+    var dayAppoint2 = ""
+    var nameDoc2 = ""
+    var timeAppoint2 = ""
+    var str2 = ""
+    var appendMount = Int()
+    var appendDay = Int()
+    var appendDayDelte = Int()
+    var appendDayDelte2 = ""
+    var appendDayNoti2 = ""
+    
     
     
     @IBAction func outBnt(_ sender: Any) {
@@ -106,6 +122,9 @@ class memuViewController: UIViewController {
         self.dismiss(animated: false, completion: nil)
         self.performSegue(withIdentifier: "logout", sender: self)
     }
+    
+    
+    
     
     func shadow(){
         showView2.layer.shadowColor = UIColor.gray.cgColor
@@ -147,6 +166,8 @@ class memuViewController: UIViewController {
         btn5.layer.shadowOpacity = 1
         btn5.layer.shadowOffset = .zero
         btn5.layer.shadowRadius = 2
+        
+        backview.layer.cornerRadius = 30
     }
     
     override func viewDidLoad() {
@@ -155,13 +176,59 @@ class memuViewController: UIViewController {
         showView2.layer.cornerRadius = 8
         showView3.layer.cornerRadius = 7
         shadow()
+        deleteDoc()
         
         recentAccount()
         imageset()
         getAppointment()
         today = selectedDate.getTitleDateFC()
+        showDayDoc.text = today
         print(today)
         getAppointmentNext()
+        
+        let aa : String = today
+        let aaa : [String] = aa.components(separatedBy: ", ")
+        var aaaa : String = aaa[1]
+        print(aaaa)
+        appendDayDelte2 = aaaa
+        appendDayNoti2 = aaaa
+        
+        
+        //notification
+        let center = UNUserNotificationCenter.current()
+        var content = UNMutableNotificationContent()
+        
+        content.title = "ท่านมีนัดหมายพบแพทย์วันนี้"
+        content.subtitle = "แพทย์ผู้ตรวจ: \(nameDoc2) ในเวลา: \(timeAppoint2)"
+        content.sound = UNNotificationSound.default
+        content.threadIdentifier = "lll"
+    
+        let gregorian = Calendar(identifier: .gregorian)
+        let now = Date()
+        var components = gregorian.dateComponents([.year, .month, .day, .hour, .minute, .second], from: now)
+
+        // Change the time to 7:00:00 in your locale
+        components.month = self.appendMount
+        components.day = self.appendDay
+        components.hour = 07
+        components.minute = 00
+        components.second = 00
+
+        let date = gregorian.date(from: components)!
+
+        let triggerDaily = Calendar.current.dateComponents([.hour,.minute,.second,], from: date)
+    
+        let trigger = UNCalendarNotificationTrigger(dateMatching: triggerDaily, repeats: false)
+        let uuidString = UUID().uuidString
+        let request =  UNNotificationRequest(identifier: "bell", content: content, trigger: trigger)
+        center.add(request) { (error) in
+            if error != nil{
+                print(error)
+            }
+        }
+        
+        
+        
         
     }
     
@@ -180,8 +247,9 @@ class memuViewController: UIViewController {
         }
     }
 
+    
+    //โชว์บัตรนัด
     func getAppointment(){
-        
         var uid2 = ""
             let user = Auth.auth().currentUser
             var uid = user?.uid
@@ -203,30 +271,104 @@ class memuViewController: UIViewController {
                                     let nameDoc = document.get("nameDoc") as! String
                                     let deptDoc = document.get("deptDoc") as! String
                                     let timeAppoint = document.get("timeAppoint") as! String
-//                                    let dayAppoint = document.get("dayAppoint") as! String
+                                    let dayAppoint = document.get("dayAppoint") as! String
                                                                 
-                                    //                            print(nameDoc)
+                                    //    print(nameDoc)
                                     self.showNameDoc.text = nameDoc
-                                    self.showDeptDoc.text = deptDoc
+                                    self.showDeptDoc.text = "แผนกอายุรกรรม"
                                     self.showTimeDoc.text = timeAppoint
-                                    self.showDayDoc.text = dayAppoint
+//                                    self.showDayDoc.text = dayAppoint
                                     
-
+                                    self.dayAppoint2 = dayAppoint
+                                    self.nameDoc2 = nameDoc
+                                    self.timeAppoint2 = timeAppoint
+                                    
                                 }
-                                
                             }
-                            
                         }
                     }
-                    
-            
         }
-                
                 }
-            }
+         
+                if self.showNameDoc.text == "กำลังโหลด"{
+                       print("Not Notification")
+                   }else{
+                print(self.dayAppoint2)
+                    let aa : String = self.dayAppoint2
+                    let aaa : [String] = aa.components(separatedBy: " ")
+                    
+                    var aaaa : String = aaa[1] //แปลงส่วนของเดือน
+                    if aaaa == "Apr" {
+                        self.appendMount = 04
+                    }else if aaaa == "May" {
+                        self.appendMount = 05
+                    }else if aaaa == "Jun" {
+                        self.appendMount = 06
+                    }
+                  
+                    
+                    var aaaaa : String = aaa[2] //แปลงส่วนของวัน
+                    var oo = Int(aaaaa)
+                    oo = self.appendDay
+//                    self.appendDayDelte = oo!+1
+//                    print(self.appendDayDelte)
+//                    self.str2 = String(self.appendDayDelte)
+//
+                    
+                    
+                    
+                   }
+                
         
+        }
     }
     
+    
+    
+    
+    //ลบบัตรนัด
+    func deleteDoc(){
+        var uid2 = ""
+        let user = Auth.auth().currentUser
+        var uid = user?.uid
+        print(uid)
+        uid2.append(contentsOf: uid!)
+        print(uid2)
+        
+        let data = self.db.collection("appointment")
+        data.getDocuments {(snapshot, error) in
+        if error == nil && snapshot != nil {
+            for document in snapshot!.documents {
+                let idUser = document.get("uid") as! String
+                for id in idUser{
+                    if idUser == uid2 {
+                        let deleteAppoint = document.get("deleteAppoint") as! String
+                        if self.appendDayDelte2 == deleteAppoint{
+                            print(self.appendDayDelte2)
+                            let documentID = document.documentID
+                            print(documentID)
+                            print("ppppp")
+                            
+                            self.db.collection("appointment").document(documentID).delete() { err in
+                                if let err = err {
+                                    print("Error removing document: \(err)")
+                                } else {
+                                    print("Document successfully removed!")
+                                }
+                            }
+                        }
+                        
+                       
+            }
+                }
+            }
+            }
+        }
+        
+
+    }
+    
+    //โชว์บัตรนัดวันต่อไป
     func getAppointmentNext(){
             var uid2 = ""
             let user = Auth.auth().currentUser
@@ -234,28 +376,34 @@ class memuViewController: UIViewController {
             print(uid)
             uid2.append(contentsOf: uid!)
             print(uid2)
-                    
+            
             let data = self.db.collection("appointment")
             data.getDocuments {(snapshot, error) in
-                if error == nil && snapshot != nil {
-                    for document in snapshot!.documents {
-                        let idUser = document.get("uid") as! String
-                        for id in idUser{
-                            if idUser == uid2 {
-                                let dayAppoint = document.get("dayAppoint") as! String
+            if error == nil && snapshot != nil {
+                for document in snapshot!.documents {
+                    let idUser = document.get("uid") as! String
+                    for id in idUser{
+                        if idUser == uid2 {
+                            let notiAppoint = document.get("NotifiAppoint") as! String
+                            if self.appendDayNoti2 == notiAppoint{
                                 let nameDoc = document.get("nameDoc") as! String
                                 let deptDoc = document.get("deptDoc") as! String
                                 let timeAppoint = document.get("timeAppoint") as! String
-                               
-                                        }
-                                        
-                                    }
-                    
+                                let dayAppoint = document.get("dayAppoint") as! String
+                                                                                                
+                                self.showNameDoc.text = nameDoc
+                                self.showDeptDoc.text = deptDoc
+                                self.showTimeDoc.text = timeAppoint
+                                self.showDayDoc.text = dayAppoint
+                                
+                            }
+                            
+                           
                 }
-                        
-                        }
                     }
-            
+                }
+                }
+        }
                 
             }
     

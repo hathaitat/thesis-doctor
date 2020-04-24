@@ -88,7 +88,7 @@ class healthSignupViewController: UIViewController, UITextFieldDelegate,UIPicker
         continueButton.titleLabel?.font = UIFont.systemFont(ofSize: 18.0, weight: UIFont.Weight.bold)
         continueButton.center = CGPoint(x: view.center.x, y: view.frame.height - continueButton.frame.height - 24)
         continueButton.highlightedColor = UIColor(white: 1.0, alpha: 1.0)
-        continueButton.defaultColor = UIColor(red: 245/255, green: 239/255, blue: 221/255, alpha: 1)
+        continueButton.defaultColor = UIColor(red: 242/255, green: 242/255, blue: 247/255, alpha: 1)
         continueButton.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
         
         view.addSubview(continueButton)
